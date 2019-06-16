@@ -6,7 +6,7 @@ pool:
 
 variables:
   Version.MajorMinor: 1.0
-  Version.CounterLabel: $[format('BuildVersion.{0}', variables['Version.MajorMinor']]
+  Version.CounterLabel: $[format('BuildVersion.{0}', variables['Version.MajorMinor'])]
   Version.Revision: $[counter(variables['Version.CounterLabel'], 0)]
 
 steps:
