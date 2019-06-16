@@ -5,9 +5,10 @@ pool:
   vmImage: 'ubuntu-16.04'
 
 variables:
-  Version.MajorMinor: 1.0
-  Version.CounterLabel: $[format('BuildVersion.{0}', variables['Version.MajorMinor'])]
-  Version.Revision: $[counter(variables['Version.CounterLabel'], 0)]
+  Version.Major: 1
+  Version.Minor: 0
+  Version.MajorMinor: $[format('{0}.{1}', variables['Version.Major'], variables['Version.Minor'])]
+  Version.Revision: $[counter(format('BuildVersion.{0}', variables['Version.MajorMinor']), 0)]
 
 steps:
 - task: Bash@3
