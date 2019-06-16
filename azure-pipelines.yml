@@ -11,6 +11,28 @@ variables:
   Version.Revision: $[counter(format('BuildVersion.{0}', variables['Version.MajorMinor']), 0)]
 
 steps:
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: 'import os
+      
+      branch_ref = os.environ["Build.SourceBranch"]
+      if  not branch_ref:
+        return
+      
+      if branch_ref.starts_with("refs/heads/"):
+        branch_name = branch_ref[len("refs/heads/"):]
+        is_pr = False
+      elif branch_ref.starts_with("refs/pull/"):
+        branch_name = branch_ref[len("refs/"):]
+        is_pr = True
+      else:
+        throw Error("Unexpected ref format in Build.SourceBranch: {0}".format(branch_ref))
+      
+      if is_pr:
+        print("##vso[task.setvariable variable=Build.PullRequest]{0}".format(branch_name))
+      else:
+        print("##vso[task.setvariable variable=Build.Branch]{0}".format(branch_name))'
 - task: Bash@3
   inputs:
     targetType: 'inline'
