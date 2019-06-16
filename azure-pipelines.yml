@@ -14,4 +14,4 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'echo "Build Version is ''${Version.MajorMinor}.${Version.Revision}''."'
+    script: 'echo "Build Version is ''${VERSION_MAJORMINOR}.${VERSION_REVISION}''."'
